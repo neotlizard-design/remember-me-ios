@@ -397,12 +397,18 @@ menu {
 }
 
 .status-line,
-.helper {
+.helper,
+.api-check-status {
   min-height: 21px;
   margin: 0 2px;
   color: var(--muted);
   font-size: 0.86rem;
   line-height: 1.45;
+}
+
+.api-check-status {
+  min-height: 0;
+  font-weight: 800;
 }
 
 .result-panel {

@@ -15,7 +15,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="assets/app-icon.png" />
     <link rel="icon" href="assets/app-icon.svg" />
-    <link rel="stylesheet" href="styles.css?v=3" />
+    <link rel="stylesheet" href="styles.css?v=4" />
   </head>
   <body>
     <div class="app-shell">
@@ -180,16 +180,18 @@
           <input id="dailyGoalInput" type="number" min="800" max="6000" step="50" />
         </label>
         <p class="helper">
-          המפתח נשמר רק במכשיר שלך. בלי מפתח אפשר להשתמש בדוגמת תוצאה, אבל ניתוח תמונה אמיתי דורש חיבור API.
+          המפתח נשמר רק במכשיר שלך. מנוי ChatGPT אינו כולל אוטומטית יתרת API; נדרש חשבון API עם חיוב פעיל.
         </p>
+        <p class="api-check-status" id="apiCheckStatus" role="status" aria-live="polite"></p>
 
         <menu>
-          <button class="secondary-button" id="clearJournalButton" type="button">נקה יומן</button>
+          <button class="secondary-button" id="testApiButton" type="button">בדוק חיבור</button>
+          <button class="text-button" id="clearJournalButton" type="button">נקה יומן</button>
           <button class="primary-button" id="saveSettingsButton" value="close">שמירה</button>
         </menu>
       </form>
     </dialog>
 
-    <script src="script.js?v=3"></script>
+    <script src="script.js?v=4"></script>
   </body>
 </html>

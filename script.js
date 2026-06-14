@@ -28,6 +28,15 @@ const copy = {
     journalCleared: "היומן נוקה.",
     settingsWithApi: "ההגדרות נשמרו. אפשר לזהות תמונות אמיתיות.",
     settingsWithoutApi: "ההגדרות נשמרו ללא מפתח API.",
+    checkingApi: "בודק חיבור ל-OpenAI...",
+    apiConnected: "החיבור תקין. המפתח יכול לגשת למודל זיהוי התמונות.",
+    apiKeyMissing: "הכנס מפתח API לפני בדיקת החיבור.",
+    errorInvalidKey: "המפתח לא תקין או בוטל. צור מפתח חדש ב-platform.openai.com.",
+    errorNoCredit: "אין יתרת API או שהחיוב אינו פעיל. מנוי ChatGPT אינו כולל שימוש ב-API.",
+    errorPermission: "למפתח אין הרשאה למודל. בדוק את הרשאות הפרויקט או צור מפתח חדש.",
+    errorRateLimit: "הגעת למגבלת השימוש. נסה שוב בעוד מספר דקות.",
+    errorBadRequest: "OpenAI דחה את הבקשה. נסה תמונה אחרת או מפתח מפרויקט אחר.",
+    errorNetwork: "לא ניתן להתחבר ל-OpenAI. בדוק אינטרנט ונסה שוב.",
     delete: "מחיקה",
     exportName: "smart-plate-hebrew-journal.json",
     demo: {
@@ -70,6 +79,15 @@ const copy = {
     journalCleared: "Дневник очищен.",
     settingsWithApi: "Настройки сохранены. Можно анализировать настоящие фотографии.",
     settingsWithoutApi: "Настройки сохранены без API-ключа.",
+    checkingApi: "Проверяю подключение к OpenAI...",
+    apiConnected: "Подключение работает. Ключ имеет доступ к модели распознавания.",
+    apiKeyMissing: "Введите API-ключ перед проверкой.",
+    errorInvalidKey: "Ключ неверный или был отозван. Создайте новый ключ на platform.openai.com.",
+    errorNoCredit: "Нет баланса API или не подключена оплата. Подписка ChatGPT не включает API.",
+    errorPermission: "У ключа нет доступа к модели. Проверьте разрешения проекта или создайте новый ключ.",
+    errorRateLimit: "Достигнут лимит запросов. Попробуйте снова через несколько минут.",
+    errorBadRequest: "OpenAI отклонил запрос. Попробуйте другое фото или ключ другого проекта.",
+    errorNetwork: "Не удалось подключиться к OpenAI. Проверьте интернет и повторите попытку.",
     delete: "Удалить",
     exportName: "smart-plate-russian-journal.json",
     demo: {
@@ -100,6 +118,8 @@ const els = {
   dailyGoalInput: document.querySelector("#dailyGoalInput"),
   saveSettingsButton: document.querySelector("#saveSettingsButton"),
   clearJournalButton: document.querySelector("#clearJournalButton"),
+  testApiButton: document.querySelector("#testApiButton"),
+  apiCheckStatus: document.querySelector("#apiCheckStatus"),
   mealPhotoInput: document.querySelector("#mealPhotoInput"),
   photoPreview: document.querySelector("#photoPreview"),
   photoPlaceholder: document.querySelector("#photoPlaceholder"),
@@ -143,6 +163,7 @@ function bindEvents() {
   els.settingsButton.addEventListener("click", () => els.settingsModal.showModal());
   els.saveSettingsButton.addEventListener("click", saveSettings);
   els.clearJournalButton.addEventListener("click", clearJournal);
+  els.testApiButton.addEventListener("click", testApiConnection);
   els.mealPhotoInput.addEventListener("change", handlePhotoChange);
   els.analyzeButton.addEventListener("click", analyzeMeal);
   els.demoButton.addEventListener("click", showDemo);
@@ -249,7 +270,7 @@ async function analyzeMeal() {
     setStatus(copy.analysisReady);
   } catch (error) {
     console.error(error);
-    setStatus(copy.analysisError, true);
+    setStatus(error instanceof OpenAIRequestError ? getApiErrorMessage(error) : copy.analysisError, true);
   } finally {
     els.analyzeButton.disabled = false;
   }
@@ -263,7 +284,7 @@ async function analyzeWithOpenAI(imageDataUrl, notes) {
       Authorization: `Bearer ${state.apiKey}`,
     },
     body: JSON.stringify({
-      model: "gpt-5.5",
+      model: "gpt-4o-mini",
       instructions: `Estimate nutrition from meal photos for a mobile app. Return all user-facing text in ${copy.outputLanguage}. Be cautious and lower confidence when portions are unclear.`,
       input: [
         {
@@ -321,8 +342,10 @@ async function analyzeWithOpenAI(imageDataUrl, notes) {
     }),
   });
 
-  if (!response.ok) throw new Error(`OpenAI request failed: ${response.status}`);
-  const data = await response.json();
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new OpenAIRequestError(response.status, data.error?.code, data.error?.message);
+  }
   const outputText =
     data.output_text ||
     data.output?.flatMap((item) => item.content || [])?.find((item) => item.type === "output_text")?.text;
@@ -497,6 +520,36 @@ function saveSettings() {
   setStatus(state.apiKey ? copy.settingsWithApi : copy.settingsWithoutApi);
 }
 
+async function testApiConnection() {
+  const apiKey = els.apiKeyInput.value.trim();
+  if (!apiKey) {
+    setApiCheckStatus(copy.apiKeyMissing, true);
+    return;
+  }
+
+  els.testApiButton.disabled = true;
+  setApiCheckStatus(copy.checkingApi);
+
+  try {
+    const response = await fetch("https://api.openai.com/v1/models/gpt-4o-mini", {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new OpenAIRequestError(response.status, data.error?.code, data.error?.message);
+    }
+
+    state.apiKey = apiKey;
+    persist();
+    setApiCheckStatus(copy.apiConnected);
+  } catch (error) {
+    console.error(error);
+    setApiCheckStatus(error instanceof OpenAIRequestError ? getApiErrorMessage(error) : copy.errorNetwork, true);
+  } finally {
+    els.testApiButton.disabled = false;
+  }
+}
+
 function exportJournal() {
   const payload = JSON.stringify({ ...state, apiKey: "" }, null, 2);
   const blob = new Blob([payload], { type: "application/json" });
@@ -516,6 +569,31 @@ function setActiveNav(activeButton) {
 function setStatus(message, isWarning = false) {
   els.statusLine.textContent = message;
   els.statusLine.style.color = isWarning ? "var(--coral)" : "var(--muted)";
+}
+
+function setApiCheckStatus(message, isWarning = false) {
+  els.apiCheckStatus.textContent = message;
+  els.apiCheckStatus.style.color = isWarning ? "var(--coral)" : "var(--leaf-dark)";
+}
+
+function getApiErrorMessage(error) {
+  if (error.status === 401) return copy.errorInvalidKey;
+  if (error.status === 403 || error.code === "model_not_found") return copy.errorPermission;
+  if (error.status === 429 && ["insufficient_quota", "billing_hard_limit_reached"].includes(error.code)) {
+    return copy.errorNoCredit;
+  }
+  if (error.status === 429) return copy.errorRateLimit;
+  if (error.status === 400) return copy.errorBadRequest;
+  return copy.errorNetwork;
+}
+
+class OpenAIRequestError extends Error {
+  constructor(status, code, message) {
+    super(message || `OpenAI request failed: ${status}`);
+    this.name = "OpenAIRequestError";
+    this.status = status;
+    this.code = code || "";
+  }
 }
 
 function clampNumber(value, min, max) {

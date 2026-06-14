@@ -15,7 +15,7 @@
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="../assets/app-icon.png" />
     <link rel="icon" href="../assets/app-icon.svg" />
-    <link rel="stylesheet" href="../styles.css?v=3" />
+    <link rel="stylesheet" href="../styles.css?v=4" />
   </head>
   <body>
     <div class="app-shell">
@@ -143,15 +143,17 @@
         <label>Ключ OpenAI API<input id="apiKeyInput" type="password" autocomplete="off" placeholder="sk-..." /></label>
         <label>Дневная норма калорий<input id="dailyGoalInput" type="number" min="800" max="6000" step="50" /></label>
         <p class="helper">
-          Ключ хранится только на вашем устройстве. Без ключа доступен пример, но для анализа настоящего фото нужен API.
+          Ключ хранится только на устройстве. Подписка ChatGPT не включает баланс API автоматически; нужен API-аккаунт с активной оплатой.
         </p>
+        <p class="api-check-status" id="apiCheckStatus" role="status" aria-live="polite"></p>
         <menu>
-          <button class="secondary-button" id="clearJournalButton" type="button">Очистить дневник</button>
+          <button class="secondary-button" id="testApiButton" type="button">Проверить подключение</button>
+          <button class="text-button" id="clearJournalButton" type="button">Очистить дневник</button>
           <button class="primary-button" id="saveSettingsButton" value="close">Сохранить</button>
         </menu>
       </form>
     </dialog>
 
-    <script src="../script.js?v=3"></script>
+    <script src="../script.js?v=4"></script>
   </body>
 </html>
