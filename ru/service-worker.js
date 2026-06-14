@@ -1,4 +1,4 @@
-const cacheName = "smart-plate-ru-v2";
+const cacheName = "smart-plate-ru-v3";
 const appShell = [
   "./",
   "index.html",
