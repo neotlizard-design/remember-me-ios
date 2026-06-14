@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#f6f8f4" />
+    <meta name="theme-color" content="#fff9f1" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="apple-mobile-web-app-title" content="צלחת חכמה" />
@@ -20,27 +20,42 @@
   <body>
     <div class="app-shell">
       <header class="top-bar" aria-label="כותרת האפליקציה">
-        <div>
-          <p class="kicker">AI nutrition camera</p>
-          <h1>צלחת חכמה</h1>
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">●</span>
+          <div>
+            <p class="kicker">AI nutrition camera</p>
+            <h1>צלחת חכמה</h1>
+          </div>
         </div>
-        <button class="icon-button" id="settingsButton" type="button" aria-label="הגדרות">⚙</button>
+        <div class="top-actions">
+          <a class="language-link" href="ru/" lang="ru">RU</a>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="הגדרות">⚙</button>
+        </div>
       </header>
 
       <main>
         <section class="scanner" aria-labelledby="scanTitle">
-          <div class="scanner-copy">
-            <p class="kicker">צילום ארוחה</p>
-            <h2 id="scanTitle">צלם צלחת וקבל הערכת קלוריות</h2>
-            <p>המערכת מזהה את רכיבי הארוחה, מעריכה כמויות ומחזירה טווח קלוריות ומאקרו. תמיד אפשר לתקן ידנית.</p>
+          <div class="food-hero">
+            <div class="hero-copy">
+              <span class="fresh-badge">טרי. פשוט. חכם.</span>
+              <h2 id="scanTitle">מה יש<br />בצלחת שלך?</h2>
+              <p>צילום אחד, וקיבלת הערכת קלוריות ומאקרו לכל הארוחה.</p>
+            </div>
+            <div class="hero-calorie-chip">
+              <strong>AI</strong>
+              <span>מזהה מזון</span>
+            </div>
           </div>
 
           <label class="photo-drop" for="mealPhotoInput" id="photoDrop">
             <input id="mealPhotoInput" type="file" accept="image/*" capture="environment" />
             <img id="photoPreview" alt="" />
             <span class="photo-placeholder" id="photoPlaceholder">
-              <strong>פתח מצלמה</strong>
-              <small>או העלה תמונה מהגלריה</small>
+              <span class="camera-disc" aria-hidden="true">◎</span>
+              <span>
+                <strong>צלם את הארוחה</strong>
+                <small>או בחר תמונה מהגלריה</small>
+              </span>
             </span>
           </label>
 
@@ -50,7 +65,7 @@
           </label>
 
           <div class="scanner-actions">
-            <button class="primary-button" id="analyzeButton" type="button">נתח ארוחה</button>
+            <button class="primary-button" id="analyzeButton" type="button">זהה מה בצלחת</button>
             <button class="secondary-button" id="demoButton" type="button">דוגמת תוצאה</button>
           </div>
           <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
@@ -60,14 +75,14 @@
           <div class="section-title">
             <div>
               <p class="kicker">תוצאה</p>
-              <h2 id="resultTitle">הערכת הארוחה</h2>
+              <h2 id="resultTitle">הצלחת שלך</h2>
             </div>
             <span class="confidence" id="confidenceBadge">ממתין לצילום</span>
           </div>
 
           <div class="calorie-total">
             <span id="calorieValue">0</span>
-            <p>קלוריות משוערות</p>
+            <p>קלוריות משוערות בארוחה</p>
           </div>
 
           <div class="macro-grid">

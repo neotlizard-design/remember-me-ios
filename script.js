@@ -1,22 +1,92 @@
-const storeKey = "smart-plate-state-v1";
+const locale = document.documentElement.lang === "ru" ? "ru" : "he";
+const storeKey = `smart-plate-state-v2-${locale}`;
 
-const demoAnalysis = {
-  title: "חזה עוף, אורז וסלט ירקות",
-  calories: 620,
-  confidence: 78,
-  notes: "הערכה לפי צלחת בינונית. דיוק הכמויות תלוי בזווית הצילום.",
-  macros: {
-    protein: 48,
-    carbs: 58,
-    fat: 18,
+const copy = {
+  he: {
+    locale: "he-IL",
+    outputLanguage: "Hebrew",
+    photographedMeal: "ארוחה מצולמת",
+    aiEstimate: "הערכת AI לפי התמונה.",
+    foodItem: "פריט מזון",
+    estimatedPortion: "מנה משוערת",
+    confidence: "ביטחון",
+    waiting: "ממתין לצילום",
+    caloriesUnit: 'קק"ל',
+    noResultTitle: "אין תוצאה עדיין",
+    noResultText: "הוסף תמונה ולחץ על זיהוי. ההערכה תופיע כאן עם אפשרות לתקן את גודל המנה.",
+    invalidImage: "בחר תמונת אוכל תקינה.",
+    imageReady: "התמונה מוכנה לזיהוי.",
+    imageError: "לא הצלחתי לקרוא את התמונה.",
+    photoRequired: "קודם צלם או העלה תמונה של הארוחה.",
+    apiRequired: "כדי לזהות תמונה אמיתית צריך להוסיף מפתח OpenAI בהגדרות.",
+    analyzing: "מזהה את מה שבצלחת...",
+    analysisReady: "הזיהוי מוכן. כדאי לבדוק את גודל המנה לפני שמירה.",
+    analysisError: "הזיהוי נכשל. בדוק את מפתח ה-API או נסה תמונה ברורה יותר.",
+    demoReady: "פתחנו דוגמה. אפשר לשנות אחוז מנה ולשמור ביומן.",
+    saved: "הארוחה נשמרה ביומן.",
+    currentCleared: "ניקיתי את הארוחה הנוכחית.",
+    journalCleared: "היומן נוקה.",
+    settingsWithApi: "ההגדרות נשמרו. אפשר לזהות תמונות אמיתיות.",
+    settingsWithoutApi: "ההגדרות נשמרו ללא מפתח API.",
+    delete: "מחיקה",
+    exportName: "smart-plate-hebrew-journal.json",
+    demo: {
+      title: "חזה עוף, אורז וסלט ירקות",
+      calories: 620,
+      confidence: 78,
+      notes: "הערכה לפי צלחת בינונית. דיוק הכמויות תלוי בזווית הצילום.",
+      macros: { protein: 48, carbs: 58, fat: 18 },
+      foods: [
+        { name: "חזה עוף צלוי", portion: "כ-160 גרם", calories: 265 },
+        { name: "אורז לבן מבושל", portion: "כוס אחת", calories: 205 },
+        { name: "סלט ירקות עם כפית שמן", portion: "קערית קטנה", calories: 90 },
+        { name: "טחינה", portion: "כף אחת", calories: 60 },
+      ],
+    },
   },
-  foods: [
-    { name: "חזה עוף צלוי", portion: "כ-160 גרם", calories: 265 },
-    { name: "אורז לבן מבושל", portion: "כוס אחת", calories: 205 },
-    { name: "סלט ירקות עם כפית שמן", portion: "קערית קטנה", calories: 90 },
-    { name: "טחינה", portion: "כף אחת", calories: 60 },
-  ],
-};
+  ru: {
+    locale: "ru-RU",
+    outputLanguage: "Russian",
+    photographedMeal: "Блюдо на фото",
+    aiEstimate: "Оценка AI по фотографии.",
+    foodItem: "Продукт",
+    estimatedPortion: "Примерная порция",
+    confidence: "точность",
+    waiting: "Ожидание фото",
+    caloriesUnit: "ккал",
+    noResultTitle: "Результата пока нет",
+    noResultText: "Добавьте фото и запустите распознавание. Здесь появится оценка и настройка размера порции.",
+    invalidImage: "Выберите подходящую фотографию еды.",
+    imageReady: "Фотография готова к распознаванию.",
+    imageError: "Не удалось прочитать фотографию.",
+    photoRequired: "Сначала сфотографируйте блюдо или загрузите фото.",
+    apiRequired: "Для анализа настоящего фото добавьте ключ OpenAI в настройках.",
+    analyzing: "Распознаю содержимое тарелки...",
+    analysisReady: "Результат готов. Проверьте размер порции перед сохранением.",
+    analysisError: "Не удалось распознать блюдо. Проверьте API-ключ или попробуйте более чёткое фото.",
+    demoReady: "Открыт пример. Можно изменить размер порции и сохранить его.",
+    saved: "Блюдо сохранено в дневнике.",
+    currentCleared: "Текущее блюдо очищено.",
+    journalCleared: "Дневник очищен.",
+    settingsWithApi: "Настройки сохранены. Можно анализировать настоящие фотографии.",
+    settingsWithoutApi: "Настройки сохранены без API-ключа.",
+    delete: "Удалить",
+    exportName: "smart-plate-russian-journal.json",
+    demo: {
+      title: "Куриная грудка, рис и овощной салат",
+      calories: 620,
+      confidence: 78,
+      notes: "Оценка для тарелки среднего размера. Точность порций зависит от угла съёмки.",
+      macros: { protein: 48, carbs: 58, fat: 18 },
+      foods: [
+        { name: "Куриная грудка на гриле", portion: "около 160 г", calories: 265 },
+        { name: "Варёный белый рис", portion: "одна чашка", calories: 205 },
+        { name: "Овощной салат с маслом", portion: "небольшая миска", calories: 90 },
+        { name: "Тахини", portion: "одна столовая ложка", calories: 60 },
+      ],
+    },
+  },
+}[locale];
 
 const state = loadState();
 let selectedPhotoDataUrl = "";
@@ -97,11 +167,7 @@ function bindEvents() {
 }
 
 function loadState() {
-  const fallback = {
-    apiKey: "",
-    dailyGoal: 2200,
-    meals: [],
-  };
+  const fallback = { apiKey: "", dailyGoal: 2200, meals: [] };
   const saved = localStorage.getItem(storeKey);
   if (!saved) return fallback;
 
@@ -124,9 +190,8 @@ function persist() {
 async function handlePhotoChange(event) {
   const file = event.target.files?.[0];
   if (!file) return;
-
   if (!file.type.startsWith("image/")) {
-    setStatus("בחר תמונת אוכל תקינה.", true);
+    setStatus(copy.invalidImage, true);
     return;
   }
 
@@ -135,9 +200,9 @@ async function handlePhotoChange(event) {
     els.photoPreview.src = selectedPhotoDataUrl;
     els.photoPreview.classList.add("is-visible");
     els.photoPlaceholder.classList.add("is-hidden");
-    setStatus("התמונה מוכנה לניתוח.");
+    setStatus(copy.imageReady);
   } catch {
-    setStatus("לא הצלחתי לקרוא את התמונה.", true);
+    setStatus(copy.imageError, true);
   }
 }
 
@@ -151,8 +216,7 @@ function resizeImage(file, maxSize, quality) {
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(image.width * scale);
         canvas.height = Math.round(image.height * scale);
-        const context = canvas.getContext("2d");
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        canvas.getContext("2d").drawImage(image, 0, 0, canvas.width, canvas.height);
         resolve(canvas.toDataURL("image/jpeg", quality));
       };
       image.onerror = reject;
@@ -165,17 +229,16 @@ function resizeImage(file, maxSize, quality) {
 
 async function analyzeMeal() {
   if (!selectedPhotoDataUrl) {
-    setStatus("קודם צלם או העלה תמונה של הארוחה.", true);
+    setStatus(copy.photoRequired, true);
     return;
   }
-
   if (!state.apiKey) {
-    setStatus("כדי לנתח תמונה אמיתית צריך להוסיף מפתח OpenAI בהגדרות.", true);
+    setStatus(copy.apiRequired, true);
     return;
   }
 
   els.analyzeButton.disabled = true;
-  setStatus("מנתח את הצלחת...");
+  setStatus(copy.analyzing);
 
   try {
     const analysis = await analyzeWithOpenAI(selectedPhotoDataUrl, els.mealNotes.value.trim());
@@ -183,10 +246,10 @@ async function analyzeMeal() {
     portionScale = 1;
     els.portionSlider.value = "100";
     renderAnalysis(currentAnalysis);
-    setStatus("הניתוח מוכן. כדאי לבדוק את גודל המנה לפני שמירה.");
+    setStatus(copy.analysisReady);
   } catch (error) {
     console.error(error);
-    setStatus("הניתוח נכשל. בדוק את מפתח ה-API או נסה תמונה ברורה יותר.", true);
+    setStatus(copy.analysisError, true);
   } finally {
     els.analyzeButton.disabled = false;
   }
@@ -201,21 +264,16 @@ async function analyzeWithOpenAI(imageDataUrl, notes) {
     },
     body: JSON.stringify({
       model: "gpt-5.5",
-      instructions:
-        "You estimate nutrition from meal photos for a Hebrew mobile app. Return cautious estimates, not medical advice. If quantity is uncertain, lower confidence and explain briefly.",
+      instructions: `Estimate nutrition from meal photos for a mobile app. Return all user-facing text in ${copy.outputLanguage}. Be cautious and lower confidence when portions are unclear.`,
       input: [
         {
           role: "user",
           content: [
             {
               type: "input_text",
-              text: `Analyze this meal photo. User notes: ${notes || "none"}. Return Hebrew food names and realistic estimated portions.`,
+              text: `Analyze this meal photo. User notes: ${notes || "none"}. Return realistic estimated portions and food names in ${copy.outputLanguage}.`,
             },
-            {
-              type: "input_image",
-              image_url: imageDataUrl,
-              detail: "high",
-            },
+            { type: "input_image", image_url: imageDataUrl, detail: "high" },
           ],
         },
       ],
@@ -273,10 +331,10 @@ async function analyzeWithOpenAI(imageDataUrl, notes) {
 
 function normalizeAnalysis(analysis) {
   return {
-    title: String(analysis.title || "ארוחה מצולמת").slice(0, 80),
+    title: String(analysis.title || copy.photographedMeal).slice(0, 80),
     calories: clampNumber(analysis.calories, 0, 5000),
     confidence: clampNumber(analysis.confidence, 0, 100),
-    notes: String(analysis.notes || "הערכת AI לפי התמונה.").slice(0, 220),
+    notes: String(analysis.notes || copy.aiEstimate).slice(0, 220),
     macros: {
       protein: clampNumber(analysis.macros?.protein, 0, 300),
       carbs: clampNumber(analysis.macros?.carbs, 0, 600),
@@ -284,8 +342,8 @@ function normalizeAnalysis(analysis) {
     },
     foods: Array.isArray(analysis.foods)
       ? analysis.foods.slice(0, 8).map((food) => ({
-          name: String(food.name || "פריט מזון").slice(0, 60),
-          portion: String(food.portion || "מנה משוערת").slice(0, 60),
+          name: String(food.name || copy.foodItem).slice(0, 60),
+          portion: String(food.portion || copy.estimatedPortion).slice(0, 60),
           calories: clampNumber(food.calories, 0, 2000),
         }))
       : [],
@@ -294,8 +352,8 @@ function normalizeAnalysis(analysis) {
 
 function renderAnalysis(analysis) {
   const scaled = analysis ? scaleAnalysis(analysis, portionScale) : null;
-  els.confidenceBadge.textContent = scaled ? `${Math.round(scaled.confidence)}% ביטחון` : "ממתין לצילום";
-  els.calorieValue.textContent = scaled ? Math.round(scaled.calories).toLocaleString("he-IL") : "0";
+  els.confidenceBadge.textContent = scaled ? `${Math.round(scaled.confidence)}% ${copy.confidence}` : copy.waiting;
+  els.calorieValue.textContent = scaled ? Math.round(scaled.calories).toLocaleString(copy.locale) : "0";
   els.proteinValue.textContent = `${scaled ? Math.round(scaled.macros.protein) : 0}g`;
   els.carbsValue.textContent = `${scaled ? Math.round(scaled.macros.carbs) : 0}g`;
   els.fatValue.textContent = `${scaled ? Math.round(scaled.macros.fat) : 0}g`;
@@ -310,8 +368,8 @@ function renderAnalysis(analysis) {
       `
     : `
         <article class="analysis-summary">
-          <h3>אין תוצאה עדיין</h3>
-          <p>הוסף תמונה ולחץ על ניתוח ארוחה. ההערכה תופיע כאן עם אפשרות לתקן את גודל המנה.</p>
+          <h3>${copy.noResultTitle}</h3>
+          <p>${copy.noResultText}</p>
         </article>
       `;
 
@@ -322,11 +380,8 @@ function renderAnalysis(analysis) {
 function foodTemplate(food) {
   return `
     <article class="food-row">
-      <div>
-        <strong>${escapeHtml(food.name)}</strong>
-        <p>${escapeHtml(food.portion)}</p>
-      </div>
-      <span>${Math.round(food.calories)} קק"ל</span>
+      <div><strong>${escapeHtml(food.name)}</strong><p>${escapeHtml(food.portion)}</p></div>
+      <span>${Math.round(food.calories)} ${copy.caloriesUnit}</span>
     </article>
   `;
 }
@@ -350,11 +405,11 @@ function updatePortion() {
 }
 
 function showDemo() {
-  currentAnalysis = normalizeAnalysis(demoAnalysis);
+  currentAnalysis = normalizeAnalysis(copy.demo);
   portionScale = 1;
   els.portionSlider.value = "100";
   renderAnalysis(currentAnalysis);
-  setStatus("פתחנו דוגמה. אפשר לשנות אחוז מנה ולשמור ליומן.");
+  setStatus(copy.demoReady);
 }
 
 function saveMeal() {
@@ -368,7 +423,7 @@ function saveMeal() {
   });
   persist();
   renderJournal();
-  setStatus("הארוחה נשמרה ביומן.");
+  setStatus(copy.saved);
 }
 
 function renderJournal() {
@@ -380,10 +435,9 @@ function renderJournal() {
       ? 0
       : state.meals.reduce((sum, meal) => sum + meal.analysis.confidence, 0) / state.meals.length;
 
-  els.todayCalories.textContent = Math.round(calories).toLocaleString("he-IL");
-  els.mealCount.textContent = todaysMeals.length.toLocaleString("he-IL");
+  els.todayCalories.textContent = Math.round(calories).toLocaleString(copy.locale);
+  els.mealCount.textContent = todaysMeals.length.toLocaleString(copy.locale);
   els.avgConfidence.textContent = `${Math.round(confidence)}%`;
-
   els.journalList.innerHTML = state.meals.map(mealTemplate).join("");
   els.emptyState.classList.toggle("is-visible", state.meals.length === 0);
 
@@ -398,12 +452,12 @@ function mealTemplate(meal) {
       ${meal.image ? `<img src="${meal.image}" alt="" />` : ""}
       <div>
         <div class="memory-meta">
-          <span class="pill">${Math.round(meal.analysis.calories)} קק"ל</span>
+          <span class="pill">${Math.round(meal.analysis.calories)} ${copy.caloriesUnit}</span>
           <span class="time-label">${formatDate(meal.createdAt)}</span>
         </div>
         <h3>${escapeHtml(meal.analysis.title)}</h3>
         <p>${escapeHtml(meal.analysis.notes)}</p>
-        <button type="button" data-delete-meal="${meal.id}">מחיקה</button>
+        <button type="button" data-delete-meal="${meal.id}">${copy.delete}</button>
       </div>
     </article>
   `;
@@ -426,21 +480,21 @@ function clearCurrentMeal() {
   els.photoPreview.classList.remove("is-visible");
   els.photoPlaceholder.classList.remove("is-hidden");
   renderAnalysis(null);
-  setStatus("ניקיתי את הארוחה הנוכחית.");
+  setStatus(copy.currentCleared);
 }
 
 function clearJournal() {
   state.meals = [];
   persist();
   renderJournal();
-  setStatus("היומן נוקה.");
+  setStatus(copy.journalCleared);
 }
 
 function saveSettings() {
   state.apiKey = els.apiKeyInput.value.trim();
   state.dailyGoal = clampNumber(els.dailyGoalInput.value, 800, 6000);
   persist();
-  setStatus(state.apiKey ? "ההגדרות נשמרו. אפשר לנתח תמונות אמיתיות." : "ההגדרות נשמרו ללא מפתח API.");
+  setStatus(state.apiKey ? copy.settingsWithApi : copy.settingsWithoutApi);
 }
 
 function exportJournal() {
@@ -449,7 +503,7 @@ function exportJournal() {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "smart-plate-journal.json";
+  link.download = copy.exportName;
   link.click();
   URL.revokeObjectURL(url);
 }
@@ -471,7 +525,7 @@ function clampNumber(value, min, max) {
 }
 
 function formatDate(date) {
-  return new Intl.DateTimeFormat("he-IL", {
+  return new Intl.DateTimeFormat(copy.locale, {
     day: "2-digit",
     month: "2-digit",
     hour: "2-digit",

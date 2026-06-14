@@ -1,0 +1,28 @@
+{
+  "name": "Умная тарелка",
+  "short_name": "Тарелка",
+  "description": "Распознавание еды по фото, оценка калорий, макронутриентов и дневник питания.",
+  "lang": "ru",
+  "dir": "ltr",
+  "id": "/remember-me-ios/ru/",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff9f1",
+  "theme_color": "#fff9f1",
+  "icons": [
+    {
+      "src": "../assets/app-icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "../assets/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

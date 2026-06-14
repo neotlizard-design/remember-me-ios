@@ -4,12 +4,13 @@
   "description": "מחשבון קלוריות מצילום ארוחה עם הערכת רכיבים, מאקרו ויומן יומי.",
   "lang": "he",
   "dir": "rtl",
+  "id": "/remember-me-ios/",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f6f8f4",
-  "theme_color": "#f6f8f4",
+  "background_color": "#fff9f1",
+  "theme_color": "#fff9f1",
   "icons": [
     {
       "src": "assets/app-icon.png",

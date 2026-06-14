@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fff9f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Умная тарелка" />
+    <title>Умная тарелка | Калории по фото</title>
+    <meta
+      name="description"
+      content="Мобильное приложение, которое распознаёт еду по фотографии и оценивает калории и макронутриенты."
+    />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="../assets/app-icon.png" />
+    <link rel="icon" href="../assets/app-icon.svg" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar" aria-label="Заголовок приложения">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">●</span>
+          <div>
+            <p class="kicker">AI nutrition camera</p>
+            <h1>Умная тарелка</h1>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a class="language-link" href="../" lang="he">עב</a>
+          <button class="icon-button" id="settingsButton" type="button" aria-label="Настройки">⚙</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="scanner" aria-labelledby="scanTitle">
+          <div class="food-hero">
+            <div class="hero-copy">
+              <span class="fresh-badge">Свежо. Просто. Умно.</span>
+              <h2 id="scanTitle">Что у вас<br />на тарелке?</h2>
+              <p>Одно фото — и вы получите оценку калорий и макронутриентов всего блюда.</p>
+            </div>
+            <div class="hero-calorie-chip">
+              <strong>AI</strong>
+              <span>распознаёт еду</span>
+            </div>
+          </div>
+
+          <label class="photo-drop" for="mealPhotoInput" id="photoDrop">
+            <input id="mealPhotoInput" type="file" accept="image/*" capture="environment" />
+            <img id="photoPreview" alt="" />
+            <span class="photo-placeholder" id="photoPlaceholder">
+              <span class="camera-disc" aria-hidden="true">◎</span>
+              <span>
+                <strong>Сфотографировать блюдо</strong>
+                <small>или выбрать фото из галереи</small>
+              </span>
+            </span>
+          </label>
+
+          <label>
+            Короткое описание, если нужно
+            <textarea id="mealNotes" rows="3" placeholder="Например: куриная грудка, рис и салат. Тарелка среднего размера."></textarea>
+          </label>
+
+          <div class="scanner-actions">
+            <button class="primary-button" id="analyzeButton" type="button">Распознать блюдо</button>
+            <button class="secondary-button" id="demoButton" type="button">Пример результата</button>
+          </div>
+          <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="result-panel" id="resultPanel" aria-labelledby="resultTitle">
+          <div class="section-title">
+            <div>
+              <p class="kicker">Результат</p>
+              <h2 id="resultTitle">Ваша тарелка</h2>
+            </div>
+            <span class="confidence" id="confidenceBadge">Ожидание фото</span>
+          </div>
+
+          <div class="calorie-total">
+            <span id="calorieValue">0</span>
+            <p>примерная калорийность блюда</p>
+          </div>
+
+          <div class="macro-grid">
+            <article><span id="proteinValue">0g</span><p>Белки</p></article>
+            <article><span id="carbsValue">0g</span><p>Углеводы</p></article>
+            <article><span id="fatValue">0g</span><p>Жиры</p></article>
+          </div>
+
+          <div class="food-list" id="foodList"></div>
+
+          <div class="adjust-panel">
+            <label>
+              Размер порции
+              <input id="portionSlider" type="range" min="50" max="150" step="5" value="100" />
+            </label>
+            <span id="portionValue">100%</span>
+          </div>
+
+          <div class="result-actions">
+            <button class="primary-button" id="saveMealButton" type="button">Сохранить</button>
+            <button class="text-button" id="clearButton" type="button">Очистить</button>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="Итоги за день">
+          <article><span id="todayCalories">0</span><p>Калорий сегодня</p></article>
+          <article><span id="mealCount">0</span><p>Приёмов пищи</p></article>
+          <article><span id="avgConfidence">0%</span><p>Средняя точность</p></article>
+        </section>
+
+        <section class="journal-section" aria-labelledby="journalTitle">
+          <div class="section-title">
+            <h2 id="journalTitle">Дневник питания</h2>
+            <button class="text-button" id="exportButton" type="button">Экспорт</button>
+          </div>
+          <div class="journal-list" id="journalList"></div>
+          <div class="empty-state" id="emptyState">
+            <span aria-hidden="true">◎</span>
+            <h3>Пока нет сохранённых блюд</h3>
+            <p>Сфотографируйте первое блюдо или откройте пример результата.</p>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Нижняя навигация">
+        <button class="is-active" type="button" data-focus="mealPhotoInput"><span aria-hidden="true">＋</span>Фото</button>
+        <button type="button" data-scroll="#resultPanel"><span aria-hidden="true">◉</span>Результат</button>
+        <button type="button" data-scroll=".journal-section"><span aria-hidden="true">☷</span>Дневник</button>
+      </nav>
+    </div>
+
+    <dialog class="settings-modal" id="settingsModal">
+      <form method="dialog">
+        <div class="modal-head">
+          <div><p class="kicker">Подключение AI</p><h2>Настройки распознавания</h2></div>
+          <button class="icon-button" value="close" aria-label="Закрыть">×</button>
+        </div>
+        <label>Ключ OpenAI API<input id="apiKeyInput" type="password" autocomplete="off" placeholder="sk-..." /></label>
+        <label>Дневная норма калорий<input id="dailyGoalInput" type="number" min="800" max="6000" step="50" /></label>
+        <p class="helper">
+          Ключ хранится только на вашем устройстве. Без ключа доступен пример, но для анализа настоящего фото нужен API.
+        </p>
+        <menu>
+          <button class="secondary-button" id="clearJournalButton" type="button">Очистить дневник</button>
+          <button class="primary-button" id="saveSettingsButton" value="close">Сохранить</button>
+        </menu>
+      </form>
+    </dialog>
+
+    <script src="../script.js"></script>
+  </body>
+</html>
