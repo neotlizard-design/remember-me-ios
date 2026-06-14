@@ -1,4 +1,4 @@
-const cacheName = "remember-me-ios26-v1";
+const cacheName = "smart-plate-v1";
 const appShell = [
   "./",
   "index.html",

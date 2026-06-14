@@ -1,15 +1,15 @@
 {
-  "name": "זכור לי",
-  "short_name": "זכור לי",
-  "description": "עוזר זיכרון חכם לפתקים, שיחות עבודה וקטגוריות עם ChatGPT.",
+  "name": "צלחת חכמה",
+  "short_name": "צלחת",
+  "description": "מחשבון קלוריות מצילום ארוחה עם הערכת רכיבים, מאקרו ויומן יומי.",
   "lang": "he",
   "dir": "rtl",
   "start_url": ".",
   "scope": ".",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f7f8fb",
-  "theme_color": "#f7f8fb",
+  "background_color": "#f6f8f4",
+  "theme_color": "#f6f8f4",
   "icons": [
     {
       "src": "assets/app-icon.png",

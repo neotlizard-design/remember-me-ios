@@ -3,14 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#f7f8fb" />
+    <meta name="theme-color" content="#f6f8f4" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-    <meta name="apple-mobile-web-app-title" content="זכור לי" />
-    <title>זכור לי | עוזר זיכרון חכם</title>
+    <meta name="apple-mobile-web-app-title" content="צלחת חכמה" />
+    <title>צלחת חכמה | מחשבון קלוריות מצילום</title>
     <meta
       name="description"
-      content="אפליקציית iOS-style לפתקים קצרים, שיחות עבודה, קטגוריות וסיווג חכם עם ChatGPT."
+      content="אפליקציית PWA לטלפון שמצלמת ארוחה, מזהה רכיבים ומעריכה קלוריות, חלבון, פחמימות ושומן."
     />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="apple-touch-icon" href="assets/app-icon.png" />
@@ -21,108 +21,127 @@
     <div class="app-shell">
       <header class="top-bar" aria-label="כותרת האפליקציה">
         <div>
-          <p class="kicker">iOS 26 ready</p>
-          <h1>זכור לי</h1>
+          <p class="kicker">AI nutrition camera</p>
+          <h1>צלחת חכמה</h1>
         </div>
-        <button class="icon-button" id="settingsButton" type="button" aria-label="הגדרות">
-          <span aria-hidden="true">⚙</span>
-        </button>
+        <button class="icon-button" id="settingsButton" type="button" aria-label="הגדרות">⚙</button>
       </header>
 
       <main>
-        <section class="composer" aria-labelledby="composerTitle">
-          <div class="composer-head">
-            <div>
-              <p class="kicker">הוספה מהירה</p>
-              <h2 id="composerTitle">מה צריך לזכור?</h2>
-            </div>
-            <button class="ghost-button" id="voiceHintButton" type="button">דוגמה</button>
+        <section class="scanner" aria-labelledby="scanTitle">
+          <div class="scanner-copy">
+            <p class="kicker">צילום ארוחה</p>
+            <h2 id="scanTitle">צלם צלחת וקבל הערכת קלוריות</h2>
+            <p>המערכת מזהה את רכיבי הארוחה, מעריכה כמויות ומחזירה טווח קלוריות ומאקרו. תמיד אפשר לתקן ידנית.</p>
           </div>
 
-          <label class="sr-only" for="memoryInput">כתוב משהו לזכור</label>
-          <textarea
-            id="memoryInput"
-            rows="4"
-            placeholder="לדוגמה: לדבר עם דניאל ביום ראשון על הצעת המחיר ולשלוח לו סיכום אחרי השיחה"
-          ></textarea>
+          <label class="photo-drop" for="mealPhotoInput" id="photoDrop">
+            <input id="mealPhotoInput" type="file" accept="image/*" capture="environment" />
+            <img id="photoPreview" alt="" />
+            <span class="photo-placeholder" id="photoPlaceholder">
+              <strong>פתח מצלמה</strong>
+              <small>או העלה תמונה מהגלריה</small>
+            </span>
+          </label>
 
-          <div class="composer-grid">
-            <label>
-              קטגוריה
-              <select id="categorySelect"></select>
-            </label>
-            <label>
-              עדיפות
-              <select id="prioritySelect">
-                <option value="normal">רגילה</option>
-                <option value="high">גבוהה</option>
-                <option value="low">נמוכה</option>
-              </select>
-            </label>
-          </div>
+          <label>
+            תיאור קצר, אם צריך
+            <textarea id="mealNotes" rows="3" placeholder="לדוגמה: חזה עוף, אורז וסלט. הצלחת בינונית."></textarea>
+          </label>
 
-          <div class="composer-actions">
-            <button class="primary-button" id="saveButton" type="button">
-              <span aria-hidden="true">＋</span>
-              שמירה
-            </button>
-            <button class="secondary-button" id="smartButton" type="button">
-              <span aria-hidden="true">✦</span>
-              סיווג חכם
-            </button>
+          <div class="scanner-actions">
+            <button class="primary-button" id="analyzeButton" type="button">נתח ארוחה</button>
+            <button class="secondary-button" id="demoButton" type="button">דוגמת תוצאה</button>
           </div>
           <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
         </section>
 
-        <section class="toolbar" aria-label="כלי סינון וחיפוש">
-          <label class="search-box">
-            <span aria-hidden="true">⌕</span>
-            <input id="searchInput" type="search" placeholder="חיפוש בזיכרונות" />
-          </label>
-          <div class="segmented" id="filterTabs" role="tablist" aria-label="סינון לפי קטגוריה"></div>
-        </section>
-
-        <section class="dashboard" aria-label="סקירה">
-          <article>
-            <span id="totalCount">0</span>
-            <p>זיכרונות</p>
-          </article>
-          <article>
-            <span id="workCount">0</span>
-            <p>שיחות עבודה</p>
-          </article>
-          <article>
-            <span id="todayCount">0</span>
-            <p>מהיום</p>
-          </article>
-        </section>
-
-        <section class="memory-section" aria-labelledby="memoryTitle">
+        <section class="result-panel" id="resultPanel" aria-labelledby="resultTitle">
           <div class="section-title">
-            <h2 id="memoryTitle">הזיכרונות שלך</h2>
-            <button class="text-button" id="clearDoneButton" type="button">נקה בוצעו</button>
+            <div>
+              <p class="kicker">תוצאה</p>
+              <h2 id="resultTitle">הערכת הארוחה</h2>
+            </div>
+            <span class="confidence" id="confidenceBadge">ממתין לצילום</span>
           </div>
-          <div class="memory-list" id="memoryList"></div>
+
+          <div class="calorie-total">
+            <span id="calorieValue">0</span>
+            <p>קלוריות משוערות</p>
+          </div>
+
+          <div class="macro-grid">
+            <article>
+              <span id="proteinValue">0g</span>
+              <p>חלבון</p>
+            </article>
+            <article>
+              <span id="carbsValue">0g</span>
+              <p>פחמימות</p>
+            </article>
+            <article>
+              <span id="fatValue">0g</span>
+              <p>שומן</p>
+            </article>
+          </div>
+
+          <div class="food-list" id="foodList"></div>
+
+          <div class="adjust-panel">
+            <label>
+              תיקון גודל מנה
+              <input id="portionSlider" type="range" min="50" max="150" step="5" value="100" />
+            </label>
+            <span id="portionValue">100%</span>
+          </div>
+
+          <div class="result-actions">
+            <button class="primary-button" id="saveMealButton" type="button">שמור ביומן</button>
+            <button class="text-button" id="clearButton" type="button">נקה</button>
+          </div>
+        </section>
+
+        <section class="dashboard" aria-label="סיכום יומי">
+          <article>
+            <span id="todayCalories">0</span>
+            <p>קלוריות היום</p>
+          </article>
+          <article>
+            <span id="mealCount">0</span>
+            <p>ארוחות</p>
+          </article>
+          <article>
+            <span id="avgConfidence">0%</span>
+            <p>דיוק ממוצע</p>
+          </article>
+        </section>
+
+        <section class="journal-section" aria-labelledby="journalTitle">
+          <div class="section-title">
+            <h2 id="journalTitle">יומן ארוחות</h2>
+            <button class="text-button" id="exportButton" type="button">ייצוא</button>
+          </div>
+          <div class="journal-list" id="journalList"></div>
           <div class="empty-state" id="emptyState">
-            <span aria-hidden="true">✦</span>
-            <h3>עדיין אין זיכרונות</h3>
-            <p>כתוב משפט קצר, והאפליקציה תעזור לסדר אותו לפי קטגוריה ועדיפות.</p>
+            <span aria-hidden="true">◎</span>
+            <h3>עדיין אין ארוחות שמורות</h3>
+            <p>צלם ארוחה ראשונה או פתח דוגמה כדי לראות איך היומן נראה.</p>
           </div>
         </section>
       </main>
 
       <nav class="bottom-nav" aria-label="ניווט תחתון">
-        <button class="is-active" type="button" data-focus="memoryInput">
+        <button class="is-active" type="button" data-focus="mealPhotoInput">
           <span aria-hidden="true">＋</span>
-          חדש
+          צילום
         </button>
-        <button type="button" data-filter-shortcut="שיחות עבודה">
-          <span aria-hidden="true">☎</span>
-          עבודה
+        <button type="button" data-scroll="#resultPanel">
+          <span aria-hidden="true">◉</span>
+          תוצאה
         </button>
-        <button type="button" data-filter-shortcut="הכל">
+        <button type="button" data-scroll=".journal-section">
           <span aria-hidden="true">☷</span>
-          הכל
+          יומן
         </button>
       </nav>
     </div>
@@ -131,8 +150,8 @@
       <form method="dialog">
         <div class="modal-head">
           <div>
-            <p class="kicker">חיבור ChatGPT</p>
-            <h2>הגדרות חכמות</h2>
+            <p class="kicker">חיבור AI</p>
+            <h2>הגדרות זיהוי</h2>
           </div>
           <button class="icon-button" value="close" aria-label="סגירה">×</button>
         </div>
@@ -141,21 +160,16 @@
           מפתח OpenAI API
           <input id="apiKeyInput" type="password" autocomplete="off" placeholder="sk-..." />
         </label>
+        <label>
+          יעד קלורי יומי
+          <input id="dailyGoalInput" type="number" min="800" max="6000" step="50" />
+        </label>
         <p class="helper">
-          המפתח נשמר רק במכשיר שלך. אם לא תוסיף מפתח, הסיווג יעבוד מקומית לפי מילים בעברית.
+          המפתח נשמר רק במכשיר שלך. בלי מפתח אפשר להשתמש בדוגמת תוצאה, אבל ניתוח תמונה אמיתי דורש חיבור API.
         </p>
 
-        <div class="category-manager">
-          <label>
-            קטגוריה חדשה
-            <input id="newCategoryInput" type="text" placeholder="לדוגמה: משפחה" />
-          </label>
-          <button class="secondary-button" id="addCategoryButton" type="button">הוספה</button>
-        </div>
-        <div class="category-chips" id="categoryManager"></div>
-
         <menu>
-          <button class="secondary-button" id="exportButton" type="button">ייצוא גיבוי</button>
+          <button class="secondary-button" id="clearJournalButton" type="button">נקה יומן</button>
           <button class="primary-button" id="saveSettingsButton" value="close">שמירה</button>
         </menu>
       </form>
