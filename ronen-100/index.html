@@ -3,115 +3,190 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f4f7fb" />
+    <meta name="theme-color" content="#17271f" />
     <meta
       name="description"
-      content="עוזרים לרונן מודל להחזיר לאניי פייביש 100 שקלים."
+      content="עוזרים לרונן מודל לגייס 100 שקלים ולהחזיר לאניי פייביש את הכסף."
     />
-    <title>עוזרים לרונן לסגור 100 ש״ח</title>
+    <title>100 לרונן | סוגרים את זה יחד</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <header class="site-header">
-      <a class="brand" href="#" aria-label="דף הבית">
-        <span class="brand-mark" aria-hidden="true">ר</span>
-        <span>עוזרים לרונן</span>
+      <a class="brand" href="#top" aria-label="100 לרונן, דף הבית">
+        <span class="brand-number">100</span>
+        <span class="brand-copy">לרונן<small>סוגרים את זה יחד</small></span>
       </a>
-      <span class="secure-note">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 3 5 6v5c0 4.7 2.9 8.7 7 10 4.1-1.3 7-5.3 7-10V6l-7-3Z" />
-          <path d="m9.5 12 1.7 1.7 3.6-3.7" />
-        </svg>
-        עמוד קהילתי
-      </span>
+      <nav aria-label="ניווט ראשי">
+        <a href="#story">הסיפור</a>
+        <a href="#how">איך זה עובד</a>
+        <button class="nav-button" type="button" data-open-donate>אני בפנים</button>
+      </nav>
     </header>
 
-    <main class="page">
-      <section class="campaign" aria-labelledby="page-title">
-        <div class="campaign-copy">
-          <p class="eyebrow"><span></span> קמפיין חברים קטן</p>
-          <h1 id="page-title">עוזרים לרונן<br />לסגור את החוב</h1>
-          <p class="intro">
-            רונן מודל צריך להחזיר לאניי פייביש 100 ש״ח.
-            אנחנו אוספים יחד את הסכום, וכל השתתפות מקרבת אותנו ליעד.
+    <main id="top">
+      <section class="hero">
+        <div class="hero-photo" role="img" aria-label="מעטפה עם כסף על שולחן בבית"></div>
+        <div class="hero-shade"></div>
+        <div class="hero-content">
+          <p class="campaign-label"><span></span> קמפיין חברים. יעד קטן. לב גדול.</p>
+          <h1>עוזרים לרונן<br />לסגור <em>100 ש״ח.</em></h1>
+          <p class="hero-intro">
+            רונן מודל צריך להחזיר לאניי פייביש את הכסף.
+            במקום להשאיר אותו לבד עם זה, אנחנו סוגרים את הסכום יחד.
           </p>
+          <div class="hero-actions">
+            <button class="primary-button" type="button" data-open-donate>
+              אני רוצה לעזור
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+            </button>
+            <a class="text-link" href="#story">
+              למה אנחנו כאן?
+              <span>↓</span>
+            </a>
+          </div>
+        </div>
 
-          <div class="features" aria-label="פרטי הקמפיין">
-            <div>
+        <aside class="floating-goal" aria-label="מצב הקמפיין">
+          <div class="goal-top">
+            <span>היעד שלנו</span>
+            <strong>₪100</strong>
+          </div>
+          <div class="progress-track"><span></span></div>
+          <div class="goal-bottom">
+            <span><i></i>הקמפיין פתוח</span>
+            <span>כל סכום נחשב</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="story-section" id="story">
+        <div class="section-index">01</div>
+        <div class="story-title">
+          <p class="section-label">הסיפור בקצרה</p>
+          <h2>חוב קטן.<br />מחווה גדולה.</h2>
+        </div>
+        <div class="story-copy">
+          <p>
+            זה לא קמפיין ענק ולא מטרה מסובכת. רונן צריך להחזיר לאניי
+            <strong>100 שקלים</strong>, ואנחנו רוצים לעזור לו לעשות את זה בלי לחץ.
+          </p>
+          <p>
+            אם עשרה חברים שמים 10 ש״ח, הגענו. אם מישהו שם 5 ש״ח, גם זה מקרב.
+            הרעיון פשוט: כל אחד נותן קצת, ורונן סוגר את הסיפור.
+          </p>
+          <div class="signature">
+            <span class="signature-line"></span>
+            <span>יוזמה של חברים, בשביל חבר</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="amount-section">
+        <div class="amount-heading">
+          <p class="section-label light">בוחרים איך לעזור</p>
+          <h2>כמה קטן,<br />ככה משמעותי.</h2>
+          <p>בחרו סכום. אנחנו נכין הודעה מוכנה, ואת ההעברה תתאמו ישירות עם רונן.</p>
+        </div>
+
+        <div class="amount-grid">
+          <button class="amount-card" type="button" data-card-amount="5">
+            <span class="amount-number">₪5</span>
+            <span class="amount-name">דחיפה קטנה</span>
+            <span class="amount-desc">כל התחלה צריכה מישהו ראשון.</span>
+            <span class="amount-arrow">←</span>
+          </button>
+          <button class="amount-card featured" type="button" data-card-amount="10">
+            <span class="popular-tag">הבחירה הפופולרית</span>
+            <span class="amount-number">₪10</span>
+            <span class="amount-name">בדיוק עשירית</span>
+            <span class="amount-desc">עשרה חברים כאלה וסגרנו.</span>
+            <span class="amount-arrow">←</span>
+          </button>
+          <button class="amount-card" type="button" data-card-amount="20">
+            <span class="amount-number">₪20</span>
+            <span class="amount-name">קפיצה רצינית</span>
+            <span class="amount-desc">חמישית מהדרך בתרומה אחת.</span>
+            <span class="amount-arrow">←</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="how-section" id="how">
+        <div class="how-header">
+          <p class="section-label">פשוט ובגובה העיניים</p>
+          <h2>שלושה צעדים<br />וסיימנו.</h2>
+        </div>
+        <div class="steps">
+          <article>
+            <span>01</span>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 6h16M4 12h10M4 18h7" />
+              </svg>
+            </div>
+            <h3>בוחרים סכום</h3>
+            <p>5, 10, 20 ש״ח או כל סכום אחר שמתאים לכם.</p>
+          </article>
+          <article>
+            <span>02</span>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4Z" />
+              </svg>
+            </div>
+            <h3>שולחים הודעה</h3>
+            <p>האתר מכין הודעה קצרה שאפשר לשלוח לרונן.</p>
+          </article>
+          <article>
+            <span>03</span>
+            <div class="step-icon">
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M20 12a8 8 0 1 1-8-8 8 8 0 0 1 8 8Z" />
                 <path d="m9 12 2 2 4-4" />
               </svg>
-              <span><strong>יעד קטן וברור</strong>רק 100 ש״ח בסך הכול</span>
             </div>
-            <div>
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 12h16M12 4v16" />
-              </svg>
-              <span><strong>כל סכום עוזר</strong>אפשר להשתתף גם ב־5 ש״ח</span>
-            </div>
-          </div>
+            <h3>מתאמים העברה</h3>
+            <p>רונן ישלח את פרטי ההעברה, וזה הכול.</p>
+          </article>
         </div>
+      </section>
 
-        <aside class="donation-card" aria-label="פרטי התרומה">
-          <div class="card-head">
-            <span class="status-dot"></span>
-            <span>הקמפיין פעיל</span>
-          </div>
-
-          <div class="goal-copy">
-            <span>יעד הגיוס</span>
-            <strong>₪100</strong>
-          </div>
-
-          <div class="progress" aria-label="יעד כולל: 100 שקלים">
-            <span></span>
-          </div>
-          <div class="progress-labels">
-            <span>מתחילים מכאן</span>
-            <span>יעד: ₪100</span>
-          </div>
-
-          <div class="divider"></div>
-
-          <p class="choose-label">בחרו סכום להשתתפות</p>
-          <div class="quick-amounts" aria-label="בחירת סכום מהירה">
-            <button type="button" data-quick-amount="5">₪5</button>
-            <button type="button" data-quick-amount="10" class="selected">₪10</button>
-            <button type="button" data-quick-amount="20">₪20</button>
-            <button type="button" data-quick-amount="50">₪50</button>
-          </div>
-
-          <button class="donate-button" id="openDonate" type="button">
-            אני רוצה להשתתף
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
-          </button>
-
-          <p class="tiny-note">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
-              <path d="M12 11v5M12 8h.01" />
-            </svg>
-            האתר אינו מבצע סליקה. התרומה מתואמת ישירות מול רונן.
-          </p>
-        </aside>
+      <section class="final-cta">
+        <div>
+          <p class="section-label light">בואו נסגור את זה</p>
+          <h2>100 שקלים.<br />זה כל הסיפור.</h2>
+        </div>
+        <button class="cta-circle" type="button" data-open-donate aria-label="בחירת סכום לתרומה">
+          <span>אני<br />בפנים</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
       </section>
     </main>
+
+    <footer>
+      <a class="brand footer-brand" href="#top">
+        <span class="brand-number">100</span>
+        <span class="brand-copy">לרונן<small>סוגרים את זה יחד</small></span>
+      </a>
+      <p>עמוד חברים פרטי. האתר אינו גובה כסף ואינו מבצע סליקה.</p>
+      <a href="#top">חזרה למעלה ↑</a>
+    </footer>
 
     <dialog id="donateDialog">
       <form method="dialog" class="dialog-card">
         <button class="close-button" value="close" aria-label="סגירה">×</button>
-        <div class="dialog-icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" /><path d="M8 12h8M12 8v8" /></svg>
-        </div>
-        <p class="eyebrow">השתתפות בקמפיין</p>
-        <h2>כמה תרצו להעביר?</h2>
-        <p class="dialog-intro">בחרו סכום ונכין עבורכם הודעה קצרה לשליחה לרונן.</p>
+        <p class="dialog-kicker">מצטרפים לקמפיין</p>
+        <h2>כמה תרצו לשים?</h2>
+        <p class="dialog-intro">בחרו סכום ונכין לכם הודעה מוכנה לשליחה לרונן.</p>
 
-        <div class="amounts" aria-label="בחירת סכום">
+        <div class="dialog-amounts" aria-label="בחירת סכום">
           <button type="button" data-amount="5">₪5</button>
           <button type="button" data-amount="10" class="selected">₪10</button>
           <button type="button" data-amount="20">₪20</button>
@@ -119,18 +194,16 @@
         </div>
 
         <label class="custom-amount">
-          או סכום אחר
-          <span>
-            <input id="customAmount" type="number" min="1" max="100" inputmode="numeric" />
-            ₪
-          </span>
+          <span>או סכום אחר</span>
+          <span class="input-wrap"><input id="customAmount" type="number" min="1" max="100" inputmode="numeric" /> ₪</span>
         </label>
 
         <button class="share-button" id="shareDonation" type="button">
-          המשך לשליחת הודעה
+          הכינו לי הודעה
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
         </button>
         <p class="dialog-note" id="dialogNote" role="status" aria-live="polite">
-          תוכלו לשלוח את ההודעה בוואטסאפ או בכל אפליקציה אחרת.
+          ההעברה עצמה מתואמת ישירות מול רונן.
         </p>
       </form>
     </dialog>
