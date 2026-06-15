@@ -65,7 +65,7 @@ customAmount.addEventListener("input", () => {
 
 shareButton.addEventListener("click", async () => {
   const amount = Math.max(1, Math.min(Number(selectedAmount) || 10, 100));
-  const text = `היי רונן, אני רוצה להשתתף עם ${amount} ש״ח כדי לעזור לך להחזיר לאניי את הכסף. איך אפשר להעביר?`;
+  const text = `היי רונן, אני רוצה להשתתף עם ${amount} ש״ח כדי לעזור לך להחזיר לינאי את הכסף. איך אפשר להעביר?`;
   const shareData = {
     title: "100 לרונן",
     text,
