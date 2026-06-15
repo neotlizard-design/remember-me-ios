@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f7f1e7" />
+    <meta name="theme-color" content="#f4f7fb" />
     <meta
       name="description"
       content="עוזרים לרונן מודל להחזיר לאניי פייביש 100 שקלים."
@@ -11,56 +11,105 @@
     <title>עוזרים לרונן לסגור 100 ש״ח</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="דף הבית">
+        <span class="brand-mark" aria-hidden="true">ר</span>
+        <span>עוזרים לרונן</span>
+      </a>
+      <span class="secure-note">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3 5 6v5c0 4.7 2.9 8.7 7 10 4.1-1.3 7-5.3 7-10V6l-7-3Z" />
+          <path d="m9.5 12 1.7 1.7 3.6-3.7" />
+        </svg>
+        עמוד קהילתי
+      </span>
+    </header>
+
     <main class="page">
-      <section class="card" aria-labelledby="page-title">
-        <div class="tape" aria-hidden="true"></div>
+      <section class="campaign" aria-labelledby="page-title">
+        <div class="campaign-copy">
+          <p class="eyebrow"><span></span> קמפיין חברים קטן</p>
+          <h1 id="page-title">עוזרים לרונן<br />לסגור את החוב</h1>
+          <p class="intro">
+            רונן מודל צריך להחזיר לאניי פייביש 100 ש״ח.
+            אנחנו אוספים יחד את הסכום, וכל השתתפות מקרבת אותנו ליעד.
+          </p>
 
-        <p class="eyebrow">מבצע קטן למטרה חשובה</p>
-        <h1 id="page-title">
-          עוזרים לרונן
-          <span>להחזיר לאניי את הכסף</span>
-        </h1>
-
-        <p class="intro">
-          רונן מודל צריך להחזיר לאניי פייביש בדיוק
-          <strong>100 שקלים</strong>. כמה חברים, כמה שקלים, וסגרנו את הסיפור.
-        </p>
-
-        <div class="goal" aria-label="יעד התרומות: 100 שקלים">
-          <div class="goal-copy">
-            <span>היעד שלנו</span>
-            <strong>₪100</strong>
+          <div class="features" aria-label="פרטי הקמפיין">
+            <div>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M20 12a8 8 0 1 1-8-8 8 8 0 0 1 8 8Z" />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+              <span><strong>יעד קטן וברור</strong>רק 100 ש״ח בסך הכול</span>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 12h16M12 4v16" />
+              </svg>
+              <span><strong>כל סכום עוזר</strong>אפשר להשתתף גם ב־5 ש״ח</span>
+            </div>
           </div>
-          <div class="coin-row" aria-hidden="true">
-            <span>10</span><span>10</span><span>10</span><span>10</span><span>10</span>
-            <span>10</span><span>10</span><span>10</span><span>10</span><span>10</span>
-          </div>
-          <p>כל סכום עוזר. באמת.</p>
         </div>
 
-        <button class="donate-button" id="openDonate" type="button">
-          בא לי לעזור
-          <span aria-hidden="true">←</span>
-        </button>
+        <aside class="donation-card" aria-label="פרטי התרומה">
+          <div class="card-head">
+            <span class="status-dot"></span>
+            <span>הקמפיין פעיל</span>
+          </div>
 
-        <p class="tiny-note">האתר לא גובה כסף. הוא רק עוזר לתאם תרומה ישירות עם רונן.</p>
+          <div class="goal-copy">
+            <span>יעד הגיוס</span>
+            <strong>₪100</strong>
+          </div>
+
+          <div class="progress" aria-label="יעד כולל: 100 שקלים">
+            <span></span>
+          </div>
+          <div class="progress-labels">
+            <span>מתחילים מכאן</span>
+            <span>יעד: ₪100</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <p class="choose-label">בחרו סכום להשתתפות</p>
+          <div class="quick-amounts" aria-label="בחירת סכום מהירה">
+            <button type="button" data-quick-amount="5">₪5</button>
+            <button type="button" data-quick-amount="10" class="selected">₪10</button>
+            <button type="button" data-quick-amount="20">₪20</button>
+            <button type="button" data-quick-amount="50">₪50</button>
+          </div>
+
+          <button class="donate-button" id="openDonate" type="button">
+            אני רוצה להשתתף
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+          </button>
+
+          <p class="tiny-note">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" />
+              <path d="M12 11v5M12 8h.01" />
+            </svg>
+            האתר אינו מבצע סליקה. התרומה מתואמת ישירות מול רונן.
+          </p>
+        </aside>
       </section>
-
-      <p class="footer-line">100 שקלים. משימה אחת. חברים טובים.</p>
     </main>
 
     <dialog id="donateDialog">
       <form method="dialog" class="dialog-card">
         <button class="close-button" value="close" aria-label="סגירה">×</button>
-        <p class="eyebrow">יאללה, סוגרים את זה</p>
-        <h2>כמה תרצו לשים?</h2>
+        <div class="dialog-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z" /><path d="M8 12h8M12 8v8" /></svg>
+        </div>
+        <p class="eyebrow">השתתפות בקמפיין</p>
+        <h2>כמה תרצו להעביר?</h2>
+        <p class="dialog-intro">בחרו סכום ונכין עבורכם הודעה קצרה לשליחה לרונן.</p>
 
         <div class="amounts" aria-label="בחירת סכום">
           <button type="button" data-amount="5">₪5</button>
@@ -78,7 +127,7 @@
         </label>
 
         <button class="share-button" id="shareDonation" type="button">
-          שלחו לרונן הודעה
+          המשך לשליחת הודעה
         </button>
         <p class="dialog-note" id="dialogNote" role="status" aria-live="polite">
           תוכלו לשלוח את ההודעה בוואטסאפ או בכל אפליקציה אחרת.

@@ -1,6 +1,7 @@
 const dialog = document.querySelector("#donateDialog");
 const openButton = document.querySelector("#openDonate");
 const amountButtons = [...document.querySelectorAll("[data-amount]")];
+const quickAmountButtons = [...document.querySelectorAll("[data-quick-amount]")];
 const customAmount = document.querySelector("#customAmount");
 const shareButton = document.querySelector("#shareDonation");
 const dialogNote = document.querySelector("#dialogNote");
@@ -8,7 +9,19 @@ const dialogNote = document.querySelector("#dialogNote");
 let selectedAmount = 10;
 
 openButton.addEventListener("click", () => {
+  const matchingButton = amountButtons.find(
+    (button) => Number(button.dataset.amount) === selectedAmount,
+  );
+  amountButtons.forEach((button) => button.classList.toggle("selected", button === matchingButton));
+  customAmount.value = matchingButton ? "" : selectedAmount;
   dialog.showModal();
+});
+
+quickAmountButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    selectedAmount = Number(button.dataset.quickAmount);
+    quickAmountButtons.forEach((item) => item.classList.toggle("selected", item === button));
+  });
 });
 
 dialog.addEventListener("click", (event) => {
@@ -22,6 +35,9 @@ amountButtons.forEach((button) => {
     selectedAmount = Number(button.dataset.amount);
     customAmount.value = "";
     amountButtons.forEach((item) => item.classList.toggle("selected", item === button));
+    quickAmountButtons.forEach((item) =>
+      item.classList.toggle("selected", Number(item.dataset.quickAmount) === selectedAmount),
+    );
     dialogNote.textContent = "תוכלו לשלוח את ההודעה בוואטסאפ או בכל אפליקציה אחרת.";
   });
 });
@@ -31,6 +47,7 @@ customAmount.addEventListener("input", () => {
   if (amount > 0) {
     selectedAmount = Math.min(amount, 100);
     amountButtons.forEach((button) => button.classList.remove("selected"));
+    quickAmountButtons.forEach((button) => button.classList.remove("selected"));
   }
 });
 
