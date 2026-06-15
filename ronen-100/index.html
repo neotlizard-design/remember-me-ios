@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f1e7" />
+    <meta
+      name="description"
+      content="עוזרים לרונן מודל להחזיר לאניי פייביש 100 שקלים."
+    />
+    <title>עוזרים לרונן לסגור 100 ש״ח</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="card" aria-labelledby="page-title">
+        <div class="tape" aria-hidden="true"></div>
+
+        <p class="eyebrow">מבצע קטן למטרה חשובה</p>
+        <h1 id="page-title">
+          עוזרים לרונן
+          <span>להחזיר לאניי את הכסף</span>
+        </h1>
+
+        <p class="intro">
+          רונן מודל צריך להחזיר לאניי פייביש בדיוק
+          <strong>100 שקלים</strong>. כמה חברים, כמה שקלים, וסגרנו את הסיפור.
+        </p>
+
+        <div class="goal" aria-label="יעד התרומות: 100 שקלים">
+          <div class="goal-copy">
+            <span>היעד שלנו</span>
+            <strong>₪100</strong>
+          </div>
+          <div class="coin-row" aria-hidden="true">
+            <span>10</span><span>10</span><span>10</span><span>10</span><span>10</span>
+            <span>10</span><span>10</span><span>10</span><span>10</span><span>10</span>
+          </div>
+          <p>כל סכום עוזר. באמת.</p>
+        </div>
+
+        <button class="donate-button" id="openDonate" type="button">
+          בא לי לעזור
+          <span aria-hidden="true">←</span>
+        </button>
+
+        <p class="tiny-note">האתר לא גובה כסף. הוא רק עוזר לתאם תרומה ישירות עם רונן.</p>
+      </section>
+
+      <p class="footer-line">100 שקלים. משימה אחת. חברים טובים.</p>
+    </main>
+
+    <dialog id="donateDialog">
+      <form method="dialog" class="dialog-card">
+        <button class="close-button" value="close" aria-label="סגירה">×</button>
+        <p class="eyebrow">יאללה, סוגרים את זה</p>
+        <h2>כמה תרצו לשים?</h2>
+
+        <div class="amounts" aria-label="בחירת סכום">
+          <button type="button" data-amount="5">₪5</button>
+          <button type="button" data-amount="10" class="selected">₪10</button>
+          <button type="button" data-amount="20">₪20</button>
+          <button type="button" data-amount="50">₪50</button>
+        </div>
+
+        <label class="custom-amount">
+          או סכום אחר
+          <span>
+            <input id="customAmount" type="number" min="1" max="100" inputmode="numeric" />
+            ₪
+          </span>
+        </label>
+
+        <button class="share-button" id="shareDonation" type="button">
+          שלחו לרונן הודעה
+        </button>
+        <p class="dialog-note" id="dialogNote" role="status" aria-live="polite">
+          תוכלו לשלוח את ההודעה בוואטסאפ או בכל אפליקציה אחרת.
+        </p>
+      </form>
+    </dialog>
+
+    <script src="script.js"></script>
+  </body>
+</html>
